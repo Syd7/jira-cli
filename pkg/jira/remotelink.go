@@ -26,7 +26,9 @@ func (c *Client) WebLinkIssue(issueId, title, url string) error {
 		return err
 	}
 
-	res, err := c.PostV2(context.Background(), fmt.Sprintf("/issue/%s/remotelink/", issueId), body, Header{
+	path := fmt.Sprintf("/issue/%s/transitions", issueId)
+
+	res, err := c.PostV2(context.Background(), path, body, Header{
 		"Accept":       "application/json",
 		"Content-Type": "application/json",
 	})
