@@ -12,7 +12,7 @@ import (
 
 const (
 	helpText     = `Connects an issue to a web link.`
-	examples     = `$ jira issue link ISSUE-1 ISSUE-2 Duplicate`
+	examples     = `$ jira issue weblink ISSUE-1 http://weblink.com weblink-title`
 	optionCancel = "Cancel"
 )
 
