@@ -14,6 +14,7 @@ func TestWebLinkIssue(t *testing.T) {
 
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, "/rest/api/2/issue/TEST-1/remotelink/", r.URL.Path)
+		assert.Equal(t, http.MethodPost, r.Method)
 		assert.Equal(t, "application/json", r.Header.Get("Accept"))
 		assert.Equal(t, "application/json", r.Header.Get("Content-Type"))
 
@@ -27,11 +28,11 @@ func TestWebLinkIssue(t *testing.T) {
 
 	client := NewClient(Config{Server: server.URL}, WithTimeout(3*time.Second))
 
-	err := client.WebLinkIssue("TEST-1", "TEST-2", "Blocks")
+	err := client.WebLinkIssue("TEST-1", "weblink title", "http://weblink.com")
 	assert.NoError(t, err)
 
 	unexpectedStatusCode = true
 
-	err = client.WebLinkIssue("TEST-1", "TEST-2", "invalid")
+	err = client.WebLinkIssue("TEST-2", "weblink title", "https://weblink.com")
 	assert.Error(t, &ErrUnexpectedResponse{}, err)
 }

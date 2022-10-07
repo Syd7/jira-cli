@@ -16,23 +16,23 @@ const (
 	optionCancel = "Cancel"
 )
 
-// NewCmdLink is a link command.
-func NewCmdLink() *cobra.Command {
+// NewCmdWeblink is a link command.
+func NewCmdWeblink() *cobra.Command {
 	cmd := cobra.Command{
-		Use:     "remotelink INWARD_ISSUE_KEY OUTWARD_ISSUE_KEY ISSUE_LINK_TYPE",
-		Short:   "Link connects two issues",
+		Use:     "remotelink ISSUE_KEY WEBLINK_URL WEBLINK_TITLE",
+		Short:   "Link an issue to a weblink",
 		Long:    helpText,
 		Example: examples,
 		Aliases: []string{"rmln"},
 		Annotations: map[string]string{
-			"help:args": "INWARD_ISSUE_KEY\tIssue key of the source issue, eg: ISSUE-1\n" +
-				"OUTWARD_ISSUE_KEY\tIssue key of the target issue, eg: ISSUE-2\n" +
-				"ISSUE_LINK_TYPE\tRelationship between two issues, eg: Duplicates, Blocks etc.",
+			"help:args": "ISSUE_KEY\tIssue key, eg: ISSUE-1\n" +
+				"WEBLINK_URL\tUrl of the weblink\n" +
+				"WEBLINK_TITLE\tTitle of the weblink",
 		},
 		Run: weblink,
 	}
 
-	cmd.Flags().Bool("web", false, "Open inward issue in web browser after successful linking")
+	cmd.Flags().Bool("web", false, "Open issue in web browser after successful linking")
 
 	return &cmd
 }
@@ -54,8 +54,8 @@ func weblink(cmd *cobra.Command, args []string) {
 	}()
 	cmdutil.ExitIfError(err)
 
-	server := viper.GetString("server")
 	cmdutil.Success("Web link created for Issue %s", lc.params.issueId)
+	server := viper.GetString("server")
 
 	if web, _ := cmd.Flags().GetBool("web"); web {
 		err := cmdutil.Navigate(server, lc.params.issueId)

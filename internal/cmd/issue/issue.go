@@ -37,7 +37,7 @@ func NewCmdIssue() *cobra.Command {
 	cmd.AddCommand(
 		lc, cc, edit.NewCmdEdit(), move.NewCmdMove(), view.NewCmdView(), assign.NewCmdAssign(),
 		link.NewCmdLink(), unlink.NewCmdUnlink(), comment.NewCmdComment(), clone.NewCmdClone(),
-		delete.NewCmdDelete(), worklog.NewCmdWorklog(), remotelink.NewCmdLink(),
+		delete.NewCmdDelete(), worklog.NewCmdWorklog(), remotelink.NewCmdWeblink(),
 	)
 
 	list.SetFlags(lc)
